@@ -12,4 +12,4 @@
 
 `raw/diabetes_binary_health_indicators.csv` é a cópia sem alteração do arquivo da UCI: 253.680 linhas e 23 colunas (`ID`, o alvo `Diabetes_binary` e 21 variáveis de questionário). O alvo vale 1 para diabetes ou pré-diabetes e 0 para ausência de diabetes.
 
-Os dados representam a população dos Estados Unidos e não foram coletados pelo autor deste trabalho. As transformações (remoção do ID, limite do IMC em 60 e a variável derivada `n_condicoes`) acontecem em memória no notebook; o arquivo bruto não é alterado.
+Os dados representam a população dos Estados Unidos e não foram coletados pelos integrantes deste trabalho. As transformações (remoção do ID, limite do IMC em 60 e a variável derivada `n_condicoes`) acontecem em memória no notebook; o arquivo bruto não é alterado.

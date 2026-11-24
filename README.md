@@ -10,7 +10,7 @@ Atividade de Ciência de Dados: as seis fases do CRISP-DM aplicadas a um problem
 
 **Professor:** Claudinei Dias (Ney)
 
-**Autor:** José Henrique Brühmüller
+**Integrantes:** André Schultz; José Henrique Brühmüller; Lucas Monich Nunes; Matheus Büsemayer.
 
 ## Trabalho principal
 
