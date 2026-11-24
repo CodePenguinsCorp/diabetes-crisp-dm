@@ -25,7 +25,7 @@ Abra **[Diabetes_CRISP-DM.ipynb](Diabetes_CRISP-DM.ipynb)**. O notebook contém 
 | 3. Preparação dos dados | 3 | ETL |
 | 4. Modelagem | 4 | Análise preditiva |
 | 5. Avaliação | 5 | Teste, intervalos de confiança, subgrupos |
-| 6. Implantação | 6 | Data storytelling e decisão |
+| 6. Implantação | 6 | Impacto, data storytelling e decisão |
 
 ## Dados e metodologia
 
@@ -49,14 +49,25 @@ Teste com 38.052 pessoas. Modelo escolhido: HistGradientBoosting (taxa de aprend
 - Para encontrar **80% dos casos**, o modelo precisa examinar 36,7% da população; a regra por idade precisa de 60,1%, cerca de 39% mais exames.
 - Variáveis que mais pesam: IMC, saúde geral autoavaliada, número de condições de saúde e idade.
 
-![Ganho acumulado e decis de risco](resultados/04_ganho_decis.png)
+![Painel de impacto](resultados/06_impacto.png)
 
-## Decisão para a gestão
+## Impacto e decisão para a gestão
 
-1. Ordenar a convocação pela nota de risco.
-2. Dimensionar a capacidade pela meta: cerca de 37% da população para encontrar 80% dos casos, e não 60%.
-3. Criar uma ação complementar para adultos de 18 a 44 anos: nessa faixa o modelo cobre só 27% dos casos.
-4. Acompanhar a cobertura por idade, sexo e renda e retreinar com dados locais antes de qualquer uso real.
+**Ideia central.** Ordenar a convocação pela nota de risco, em vez da idade, encontra cerca de **3.900 casos a mais por ciclo** a cada 100 mil adultos com os mesmos 20 mil exames, ou os mesmos casos com **39% menos exames**. A gestão deve adotar a fila por risco e criar uma ação própria para os adultos de 18 a 44 anos.
+
+A cada 100 mil adultos, com exame a R$ 20 (valor ilustrativo, ajustável no notebook):
+
+| Estratégia | Casos encontrados com 20 mil exames | Custo por caso encontrado |
+|---|---:|---:|
+| Seleção aleatória | 2.715 | R$ 147 |
+| Regra simples por idade (cenário inercial) | 3.981 | R$ 100 |
+| **Modelo (intervenção)** | **7.892** (IC95% 7.739 a 8.067) | **R$ 51** |
+
+Para encontrar 80% dos casos, a regra por idade exige 60.134 exames e o modelo 36.734: **23.400 exames a menos por ciclo**, cerca de R$ 468 mil a R$ 20 por exame. O notebook traz também a sensibilidade ao custo do exame e à capacidade.
+
+Plano de ação: (1) adotar a fila por risco; (2) dimensionar a capacidade pela meta, cerca de 37% da população para achar 80% dos casos; (3) criar uma ação para adultos de 18 a 44 anos; (4) acompanhar casos por 1.000 exames, custo por caso e cobertura por subgrupo a cada ciclo; (5) retreinar com dados locais.
+
+**Limite da conta:** só o custo dos exames entra. O benefício clínico de achar o caso mais cedo (complicações evitadas) não foi estimado, e é ele que fecha o retorno completo.
 
 **O que não deu certo:** dos três critérios de sucesso fixados antes da modelagem, dois foram atendidos (lift acima de 2,0 e ganho sobre a regra por idade). O terceiro, cobertura mínima de 50% em todos os subgrupos, não foi: adultos jovens (27%) e renda alta (42%) ficam sub-representados. Está discutido no notebook.
 
@@ -88,8 +99,8 @@ Abra o notebook no VS Code ou no Jupyter, selecione o kernel **Diabetes CRISP-DM
 | `data/raw/` | CSV original da UCI, sem alteração |
 | `data/README.md` | Fonte, licença e integridade dos dados |
 | `resultados/CONCLUSAO.md` | Resumo e decisão recomendada |
-| `resultados/*.png` | Cinco figuras da EDA e da avaliação |
-| `resultados/*.csv` | Métricas, decis, subgrupos, importância e capacidade necessária |
+| `resultados/*.png` | Seis figuras: EDA, avaliação e painel de impacto |
+| `resultados/*.csv` | Métricas, decis, subgrupos, importância e capacidade necessária e impacto por 100 mil adultos |
 | `resultados/modelo.joblib` | Modelo final, variáveis e corte usado na função `priorizar()` |
 | `resultados/metadados.json` | Versões, semente, partições e métricas |
 | `roteiro_apresentacao.md` | Roteiro de 8 minutos para a apresentação |
