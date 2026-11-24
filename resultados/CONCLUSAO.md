@@ -14,13 +14,13 @@
 
 Lift do modelo: 2.83 (IC95% 2.78 a 2.90). Para encontrar 80% dos casos, examinar 36.7% da população (regra por idade: 60.1%).
 
-**Impacto (a cada 100.000 adultos, exame a R$ 20, hipótese).**
+**Impacto (a cada 100.000 adultos, exame a R$ 1,85, tabela SUS).**
 
 | Estratégia | Casos encontrados | Custo por caso |
 |---|---:|---:|
-| Aleatória | 2.715 | R$ 147 |
-| Regra por idade | 3.981 | R$ 100 |
-| Modelo | 7.892 | R$ 51 |
+| Aleatória | 2.715 | R$ 13,63 |
+| Regra por idade | 3.981 | R$ 9,29 |
+| Modelo | 7.892 | R$ 4,69 |
 
 Casos a mais que a regra por idade: 3.910 por ciclo (IC95% 3.696 a 4.121). Para encontrar 80% dos casos: 23.400 exames a menos por ciclo (39%).
 
