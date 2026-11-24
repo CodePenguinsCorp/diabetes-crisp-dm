@@ -1,0 +1,51 @@
+{
+  "fonte_dados": "UCI 891 - CDC Diabetes Health Indicators",
+  "linhas": 253680,
+  "variaveis_modelo": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "BMI",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "MentHlth",
+    "PhysHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income",
+    "n_condicoes"
+  ],
+  "semente": 42,
+  "modelo_escolhido": "HGB lr=0.05 folhas=31 l2=0.0",
+  "particoes": {
+    "treino": 177576,
+    "validacao": 38052,
+    "teste": 38052
+  },
+  "metricas_teste": {
+    "AUC-ROC": 0.827563719293598,
+    "AUC-PR": 0.42096112398354735,
+    "captura@20%": 0.5663900414937759,
+    "precisão@20%": 0.3945605045329129,
+    "lift@20%": 2.8319502074688794
+  },
+  "ambiente": {
+    "python": "3.13.5",
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "sistema": "Windows-11-10.0.26300-SP0"
+  },
+  "sha256_csv": "9f71fda9d4ae5f4878c99b9233b6a16accfa9a17c194116a6b78100540934964"
+}
