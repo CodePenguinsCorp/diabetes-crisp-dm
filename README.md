@@ -18,14 +18,21 @@ Abra **[Diabetes_CRISP-DM.ipynb](Diabetes_CRISP-DM.ipynb)**. O notebook contém 
 
 **Problema:** um programa de saúde só consegue examinar uma parte da população por ciclo. Com capacidade para **20% das pessoas**, quem chamar primeiro para o exame de diabetes para encontrar o maior número de casos?
 
-| Fase CRISP-DM | Seção do notebook | Técnica |
-|---|---|---|
-| 1. Entendimento do negócio | 1 | Problema, decisão e critérios de sucesso definidos antes da modelagem |
-| 2. Entendimento dos dados | 2 | EDA |
-| 3. Preparação dos dados | 3 | ETL |
-| 4. Modelagem | 4 | Análise preditiva |
-| 5. Avaliação | 5 | Teste, intervalos de confiança, subgrupos |
-| 6. Implantação | 6 | Impacto, data storytelling e decisão |
+## O caminho
+
+O notebook é uma trilha de nove perguntas: cada resposta leva à próxima, do problema de saúde até a decisão.
+
+| Parada | Pergunta | Resposta curta | Fase CRISP-DM |
+|:---:|---|---|---|
+| 1 | Que decisão precisamos tomar? | Quem chamar primeiro com exames para 20% das pessoas | Entendimento do negócio |
+| 2 | Dá para confiar nos dados? | Sim, com limites: autodeclarados e dos EUA | Entendimento dos dados (EDA) |
+| 3 | Basta chamar os mais velhos primeiro? | Não: ajuda, mas deixa muitos de fora | Entendimento dos dados (EDA) |
+| 4 | Que outros sinais aparecem junto do diabetes? | Pressão alta, IMC, saúde percebida e renda | Entendimento dos dados (EDA) |
+| 5 | Como preparar os dados sem enganar o resultado? | Um único tratamento e um teste separado até o fim | Preparação dos dados (ETL) |
+| 6 | Juntar os sinais ajuda a escolher melhor? | Sim: AUC-PR de 0,197 para 0,441 na validação | Modelagem (análise preditiva) |
+| 7 | Funciona com pessoas que o modelo nunca viu? | Sim: 56,6% dos casos com 20% dos exames | Avaliação |
+| 8 | Para quem o modelo funciona mal? | Adultos de 18 a 44 anos (27% dos casos chamados) | Avaliação |
+| 9 | O que muda na prática e o que fazer agora? | Fila por risco, ação para os jovens e acompanhamento | Implantação (data storytelling) |
 
 ## Dados e metodologia
 
@@ -103,4 +110,4 @@ Abra o notebook no VS Code ou no Jupyter, selecione o kernel **Diabetes CRISP-DM
 | `resultados/*.csv` | Métricas, decis, subgrupos, importância e capacidade necessária e impacto por 100 mil adultos |
 | `resultados/modelo.joblib` | Modelo final, variáveis e corte usado na função `priorizar()` |
 | `resultados/metadados.json` | Versões, semente, partições e métricas |
-| `roteiro_apresentacao.md` | Roteiro de 8 minutos para a apresentação |
+| `roteiro_apresentacao.md` | Roteiro de 8 minutos que percorre as nove paradas |
