@@ -26,7 +26,7 @@
     "n_condicoes"
   ],
   "semente": 42,
-  "modelo_escolhido": "HGB lr=0.05 folhas=31 l2=0.0",
+  "modelo_escolhido": "Boosting (taxa 0,05; 31 folhas; L2 0)",
   "particoes": {
     "treino": 177576,
     "validacao": 38052,

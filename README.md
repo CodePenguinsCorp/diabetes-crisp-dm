@@ -31,13 +31,13 @@ Abra **[Diabetes_CRISP-DM.ipynb](Diabetes_CRISP-DM.ipynb)**. O notebook contém 
 
 - Fonte: [CDC Diabetes Health Indicators, UCI](https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators), pesquisa BRFSS 2015 dos Estados Unidos. Detalhes, licença e hash em [data/README.md](data/README.md).
 - 253.680 respostas e 21 variáveis de questionário (pressão alta, IMC, saúde geral, idade, renda e outras), sem exames de laboratório. O alvo é diabetes ou pré-diabetes (13,9% da base).
-- **ETL:** remoção do ID, limite do IMC em 60, variável `n_condicoes` (condições de saúde relatadas) e divisão estratificada em 70% treino, 15% validação e 15% teste. As 24.206 linhas repetidas foram mantidas, com justificativa no notebook.
-- **Modelagem:** base ingênua, regra simples por idade, regressão logística, random forest e HistGradientBoosting (oito configurações). Seleção pela AUC-PR na validação; modelo escolhido reajustado em treino e validação e avaliado uma vez no teste.
-- **Métrica de decisão:** captura de casos entre os 20% de maior risco e lift, porque o uso é ordenar uma fila. A acurácia não serve com 14% de positivos.
+- **ETL:** remoção do ID, limite do IMC em 60, variável com o número de condições de saúde relatadas (`n_condicoes`) e divisão estratificada em 70% treino, 15% validação e 15% teste. As 24.206 linhas repetidas foram mantidas, com justificativa no notebook.
+- **Modelagem:** base ingênua, regra simples por idade, regressão logística, floresta aleatória e boosting de árvores (oito configurações). Seleção pela AUC-PR (precisão média) na validação; modelo escolhido reajustado em treino e validação e avaliado uma vez no teste.
+- **Métrica de decisão:** casos encontrados entre os 20% de maior risco e quantas vezes isso é melhor que o acaso (*lift*), porque o uso é ordenar uma fila. A acurácia não serve com 14% de positivos.
 
 ## Resultados no teste
 
-Teste com 38.052 pessoas. Modelo escolhido: HistGradientBoosting (taxa de aprendizado 0,05, 31 folhas).
+Teste com 38.052 pessoas. Modelo escolhido: boosting de árvores (*HistGradientBoosting*, taxa de aprendizado 0,05, 31 folhas).
 
 | Estratégia | Casos encontrados com 20% dos exames | Casos a cada 1.000 examinados |
 |---|---:|---:|
@@ -45,9 +45,9 @@ Teste com 38.052 pessoas. Modelo escolhido: HistGradientBoosting (taxa de aprend
 | Regra simples por idade | 28,6% | 199 |
 | **Modelo** | **56,6%** | **395** |
 
-- AUC-PR de 0,421 (IC95% 0,408 a 0,435) contra 0,139 da seleção aleatória. Lift@20% de 2,83 (IC95% 2,78 a 2,90).
+- AUC-PR de 0,421 (IC95% 0,408 a 0,435) contra 0,139 da seleção aleatória. Com 20% dos exames, o modelo é 2,83 vezes melhor que o acaso (IC95% 2,78 a 2,90).
 - Para encontrar **80% dos casos**, o modelo precisa examinar 36,7% da população; a regra por idade precisa de 60,1%, cerca de 39% mais exames.
-- Variáveis que mais pesam: IMC, saúde geral autoavaliada, número de condições de saúde e idade.
+- Informações que mais pesam no modelo: IMC, saúde geral autoavaliada, número de condições de saúde e idade.
 
 ![Painel de impacto](resultados/06_impacto.png)
 
@@ -63,13 +63,13 @@ A cada 100 mil adultos, com exame a **R$ 1,85** (valor do procedimento "dosagem 
 | Regra simples por idade (cenário inercial) | 3.981 | R$ 9,29 |
 | **Modelo (intervenção)** | **7.892** (IC95% 7.739 a 8.067) | **R$ 4,69** |
 
-Para encontrar 80% dos casos, a regra por idade exige 60.134 exames e o modelo 36.734: **23.400 exames a menos por ciclo**, cerca de R$ 43 mil só em exames. O valor em reais é pequeno porque o exame no SUS é barato: o ganho principal é achar o dobro de casos com a mesma capacidade. No setor privado (cerca de R$ 6 a R$ 23 por exame, segundo tabelas de sites de conteúdo, fonte fraca) a economia chega a R$ 140 mil até R$ 538 mil por ciclo. O notebook traz a sensibilidade ao custo e à capacidade.
+Para encontrar 80% dos casos, a regra por idade exige 60.134 exames e o modelo 36.734: **23.400 exames a menos por ciclo**, cerca de R$ 43 mil só em exames. O valor em reais é pequeno porque o exame no SUS é barato: o ganho principal é achar quase o dobro de casos com a mesma capacidade. No setor privado (cerca de R$ 6 a R$ 23 por exame, segundo tabelas de sites de conteúdo, fonte fraca) a economia chega a R$ 140 mil até R$ 538 mil por ciclo. O notebook traz a sensibilidade ao custo e à capacidade.
 
-Plano de ação: (1) adotar a fila por risco; (2) dimensionar a capacidade pela meta, cerca de 37% da população para achar 80% dos casos; (3) criar uma ação para adultos de 18 a 44 anos; (4) acompanhar casos por 1.000 exames, custo por caso e cobertura por subgrupo a cada ciclo; (5) retreinar com dados locais.
+Plano de ação: (1) adotar a fila por risco; (2) dimensionar a capacidade pela meta, cerca de 37% da população para achar 80% dos casos; (3) criar uma ação para adultos de 18 a 44 anos; (4) acompanhar casos por 1.000 exames, custo por caso e a parcela de casos chamados em cada grupo, a cada ciclo; (5) retreinar com dados locais.
 
 **Limite da conta:** só o pagamento do exame entra (sem coleta, logística e convocação). O benefício clínico de achar o caso mais cedo (complicações evitadas) não foi estimado, e é ele que fecha o retorno completo.
 
-**O que não deu certo:** dos três critérios de sucesso fixados antes da modelagem, dois foram atendidos (lift acima de 2,0 e ganho sobre a regra por idade). O terceiro, cobertura mínima de 50% em todos os subgrupos, não foi: adultos jovens (27%) e renda alta (42%) ficam sub-representados. Está discutido no notebook.
+**O que não deu certo:** dos três critérios de sucesso fixados antes da modelagem, dois foram atendidos (pelo menos 2 vezes melhor que o acaso e mais casos que a regra por idade). O terceiro, chamar ao menos 50% dos casos em todos os grupos, não foi: entre adultos de 18 a 44 anos são chamados só 27% dos casos, e na renda alta, 42%. Está discutido no notebook.
 
 **Limitações:** dados dos Estados Unidos (2015) e autodeclarados, alvo que reúne diabetes e pré-diabetes, estudo de corte transversal. O modelo ordena risco; não diagnostica nem prova causa.
 
