@@ -2,7 +2,7 @@
 
 Atividade de Ciência de Dados: as seis fases do CRISP-DM aplicadas a um problema de saúde, com ETL, EDA, análise preditiva e data storytelling para chegar a uma decisão.
 
-[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/JHBruhmuller/diabetes-crisp-dm/blob/main/Diabetes_CRISP-DM.ipynb)
+[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CodePenguinsCorp/diabetes-crisp-dm/blob/main/Diabetes_CRISP-DM.ipynb)
 
 **Instituição:** Católica de Santa Catarina
 
